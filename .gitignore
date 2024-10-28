@@ -1,0 +1,36 @@
+# eclipse
+bin
+*.launch
+.settings
+.metadata
+.classpath
+.project
+
+# idea
+out
+*.ipr
+*.iws
+*.iml
+.idea
+
+# gradle
+# Builds & binaries
+build/
+run/
+bin/
+target/
+lib/
+invtweaks_docs/_build
+launcher/
+.gradle/
+*.zip
+*.jar
+
+!gradle-wrapper.jar
+
+# other
+eclipse
+run
+
+# Files from Forge MDK
+forge*changelog.txt

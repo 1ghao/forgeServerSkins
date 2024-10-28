@@ -1,0 +1,16 @@
+[
+{
+  "modid": "forgeServerSkins",
+  "name": "forgeServerSkins",
+  "description": "server side implementation of /skin command",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["wantac"],
+  "credits": "wantac for doing this and iPorte_ for begging for this",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
