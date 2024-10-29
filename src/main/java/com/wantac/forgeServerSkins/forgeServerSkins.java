@@ -1,15 +1,12 @@
 package com.wantac.forgeServerSkins;
 
-import net.minecraft.init.Blocks;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLServerStartedEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import org.apache.logging.log4j.Logger;
 
-@Mod(modid = "forgeServerSkins", name = "forgeServerSkins", version = "1.0")
+@Mod(modid = "forgeserverskins", name = "forgeServerSkins", version = "1.0", acceptableRemoteVersions = "*")
 public class forgeServerSkins
 {
     public static final String MODID = "forgeServerSkins";
@@ -24,11 +21,10 @@ public class forgeServerSkins
         logger = event.getModLog();
     }
 
-    @EventHandler
-    public void init(FMLServerStartingEvent event)
+    @Mod.EventHandler
+    public void serverLoad(FMLServerStartingEvent event)
     {
         logger.info("initalise FMLServerStartingEvent :" + NAME);
-        event.registerServerCommand(new EchoCommand());
+        event.registerServerCommand(new SkinCommand());
     }
-
 }
