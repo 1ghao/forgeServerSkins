@@ -80,6 +80,7 @@ public class SkinCommand extends net.minecraft.command.CommandBase {
 
                     // Refresh player for changes to take effect
                     refreshPlayerSkin(player);
+                    resyncPlayerInventory(player);
                     sender.sendMessage(new TextComponentString("Skin changed to " + targetUsername));
                     return;
                 }
@@ -115,6 +116,10 @@ public class SkinCommand extends net.minecraft.command.CommandBase {
 
         // Update the player's position
         player.connection.setPlayerLocation(player.posX, player.posY, player.posZ, player.rotationYaw, player.rotationPitch);
+    }
+
+    private void resyncPlayerInventory(EntityPlayerMP player) {
+        player.sendContainerToPlayer(player.inventoryContainer);
     }
 
     @Mod.EventHandler
