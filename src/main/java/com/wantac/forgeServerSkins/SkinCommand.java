@@ -22,6 +22,11 @@ import java.io.InputStreamReader;
 import java.net.URL;
 
 public class SkinCommand extends CommandBase {
+    private final PlayerSkinData skinData;
+
+    public SkinCommand(String dataFilePath) {
+        this.skinData  = new PlayerSkinData((dataFilePath));
+    }
 
     @Override
     public String getName() {
@@ -80,6 +85,12 @@ public class SkinCommand extends CommandBase {
                     String skinValue = property.get("value").getAsString();
                     String skinSignature = property.get("signature").getAsString();
 
+                    // Save skin data
+                    skinData.setSkin(player.getName(), skinValue, skinSignature);
+
+                    applyStoredSkin(player);
+
+
                     // Apply the skin to the player
                     GameProfile newProfile = new GameProfile(player.getUniqueID(), player.getName());
 
@@ -131,6 +142,17 @@ public class SkinCommand extends CommandBase {
 
     private void resyncPlayerInventory(EntityPlayerMP player) {
         player.sendContainerToPlayer(player.inventoryContainer);
+    }
+
+    public void applyStoredSkin(EntityPlayerMP player) {
+        PlayerSkinData.SkinInfo skinInfo = skinData.getSkin(player.getName());
+        if (skinInfo != null) {
+            GameProfile newProfile = new GameProfile(player.getUniqueID(), player.getName());
+            newProfile.getProperties().put("textures", new Property("textures", skinInfo.value, skinInfo.signature));
+            ObfuscationReflectionHelper.setPrivateValue(EntityPlayer.class, player, newProfile, "field_146106_i");
+            refreshPlayerSkin(player);
+            resyncPlayerInventory(player);
+        }
     }
 
 }
