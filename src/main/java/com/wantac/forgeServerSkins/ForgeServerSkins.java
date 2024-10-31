@@ -6,11 +6,11 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import org.apache.logging.log4j.Logger;
 
-@Mod(modid = "forgeserverskins", name = "forgeServerSkins", version = "1.0", acceptableRemoteVersions = "*")
-public class forgeServerSkins
+@Mod(modid = "forgeserverskins", name = "Forge  Server Skins", version = "1.0", acceptableRemoteVersions = "*")
+public class ForgeServerSkins
 {
-    public static final String MODID = "forgeServerSkins";
-    public static final String NAME = "forgeServerSkins";
+    public static final String MODID = "forgeserverskins";
+    public static final String NAME = "Forge Server Skins";
     public static final String VERSION = "1.0";
 
     static Logger logger;
@@ -22,7 +22,7 @@ public class forgeServerSkins
     }
 
     @Mod.EventHandler
-    public void serverLoad(FMLServerStartingEvent event)
+    public void onServerStarting(FMLServerStartingEvent event)
     {
         logger.info("initalise FMLServerStartingEvent :" + NAME);
         event.registerServerCommand(new SkinCommand());

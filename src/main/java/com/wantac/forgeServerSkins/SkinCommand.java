@@ -6,6 +6,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
@@ -14,19 +15,27 @@ import net.minecraft.network.play.server.SPacketEntityMetadata;
 import net.minecraft.network.play.server.SPacketRespawn;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentString;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
-import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraft.network.play.server.SPacketPlayerListItem;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 
-public class SkinCommand extends net.minecraft.command.CommandBase {
+public class SkinCommand extends CommandBase {
 
     @Override
     public String getName() {
         return "skin";
+    }
+
+    @Override
+    public int getRequiredPermissionLevel() {
+        return 0;
+    }
+
+    @Override
+    public boolean checkPermission(MinecraftServer server, ICommandSender sender) {
+        return true;
     }
 
     @Override
@@ -40,6 +49,8 @@ public class SkinCommand extends net.minecraft.command.CommandBase {
         if (args.length != 1) {
             throw new CommandException("Usage: /skin <username>");
         }
+
+//        if (sender.canUseCommand())
 
         String targetUsername = args[0];
         EntityPlayerMP player = getCommandSenderAsPlayer(sender);
@@ -75,10 +86,10 @@ public class SkinCommand extends net.minecraft.command.CommandBase {
                     // Add the skin property to the new profile
                     newProfile.getProperties().put("textures", new Property("textures", skinValue, skinSignature));
 
-                    // Use Forge's ObfuscationReflectionHelper to set the gameProfile field
+                    // Set the gameProfile field
                     ObfuscationReflectionHelper.setPrivateValue(EntityPlayer.class, player, newProfile, "field_146106_i");
 
-                    // Refresh player for changes to take effect
+                    // Refresh player
                     refreshPlayerSkin(player);
                     resyncPlayerInventory(player);
                     sender.sendMessage(new TextComponentString("Skin changed to " + targetUsername));
@@ -122,10 +133,6 @@ public class SkinCommand extends net.minecraft.command.CommandBase {
         player.sendContainerToPlayer(player.inventoryContainer);
     }
 
-    @Mod.EventHandler
-    public void serverLoad(FMLServerStartingEvent event) {
-        event.registerServerCommand(new SkinCommand());
-    }
 }
 
 

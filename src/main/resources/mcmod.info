@@ -1,7 +1,7 @@
 [
 {
   "modid": "forgeserverskins",
-  "name": "forgeServerSkins",
+  "name": "Forge Server Skins",
   "description": "server side implementation of /skin command",
   "version": "${version}",
   "mcversion": "${mcversion}",
